@@ -1,0 +1,109 @@
+= Configure Anypont Connectors
+ifndef::env-site,env-github[]
+include::_attributes.adoc[]
+endif::[]
+:imagesdir: ../../assets/images/
+
+Every connector has specific configuration requirements, which are described in the Reference Guide for that connector. Although connectors have different configuration requirements, most connector configurations require that you configure:
+
+* An input source to start the app flow.
+* The authorization credentials needed to connect to the connector's data source, for example, Salesforce or Amazon AWS. Most connectors use Basic (username and password), OAuth, or OAuth2 authentication schemes.
+* A connector operation to perform the desired action.
+
+To configure an input source, select an input source associated with the connector you are configuring, or select an HTTP Listener or Scheduler. Not all connectors have associated input sources. For more information about input sources, see <<introduction/introduction-to-anypoint-connectors.adoc#input-sources, Input Sources>>.
+
+To configure authorization credentials, it is recommended that you create a global element. Global elements enable reuse, because they act as reusable objects. When you configure a global element for a connector, other instances of that connector in the app can share that global element. For more information on global elements, see xxx.
+
+You can configure a connector using the Flow Designer feature of Anypoint Design Center, Anypoint Studio, or XML.
+
+== Configure a Connector in Design Center
+
+The Flow Designer feature of Anypoint Design Center enables you to create apps visually. To use Flow Designer, work with your Anypoint Platform administrator to ensure that you have a xref:access-management::environments.adoc#to-create-a-new-environment[Design environment]. For more information, see the
+xref:design-center::fd-tour.adoc[Flow Designer Tour].
+
+To create an app in Flow Designer:
+
+* Configure the input source (trigger) for your app.
+* Configure the target component for your app.
+
+The following procedures describe the high-level steps to follow when you configure a connector using Flow Designer. For more detailed steps, see the connector User Guide. For information about the required field values, see the connector Reference Guide.
+
+=== Configure the Input Source
+
+. In Design Center, click *Create*.
+. Click *Create new application* to open Flow Designer.
+. Specify a value for *Project name* and click *Create*.
+. Click *Go straight to canvas* to exit from *Let's get started*.
+. Click on the trigger card.
+. Search for the connector.
+. Select the connector name.
+. Select a source operation, or use the HTTP Connector or Scheduler component as an input source.
++
+. Click *Click here to set it up*.
+. Enter required values, as described in the Reference Guide for the connector.
+. Click *Test* to confirm that the parameters of your global configuration are accurate, and that Mule is able to successfully connect to the associated data source.
+. Click off the trigger card.
++
+Flow Designer automatically saves all changes.
+
+=== Configure the Target Component
+
+. Click *+* next to the trigger card.
+. In *Select a component*, search for the connector name.
+. Select the connector name.
+. Select an operation for the connector.
+. If needed, specify values that are required in the *General* tab.
++
+. Select *Edit* to set up other required fields.
+. If you added or changed values for the listed fields, click *Test* to confirm that the parameters of your configuration are accurate, and that Mule is able to connect successfully to your instance of the associated data source.
+
+== Configure a Connector in Studio
+
+To configure a connector in Anypoint Studio:
+
+. Install the connector.
+. Configure an input source for the connector.
+. Configure the connector.
+
+=== Install the Connector
+
+Installing the connector adds it to a Studio project. Anypoint Studio provides two ways to install a connector:
+
+* Use the Exchange application in the Studio taskbar.
+* Use the Exchange icon in the Mule Palette view.
+
+To install the connector from the Studio taskbar:
+
+. In Studio, create a Mule project.
+. Click the Exchange icon *(X)* in the upper left of the Studio task bar.
+. In Exchange, click *Login* and supply your Anypoint Platform username and password.
+. In Exchange, search for `Amazon SQS`.
+. Select *Amazon SQS*.
+. Click *Add to project*.
+. Follow the prompts to install the connector.
+
+To install the connector from the Mule palette view:
+
+. In Studio, create a Mule project.
+. In the Mule Palette view, click *(X) Search in Exchange*.
+. In *Add Modules to Project*, type `Amazon SQS` in the search field.
+. Click the connector name in *Available modules*.
+. Click *Add*.
+. Click *Finish*.
+
+=== Configure an Input Source
+
+Configure an input source for the connector, such as a connector operation, HTTP Listener, or Scheduler.
+
+=== Configure the Connector
+
+Configure a global element that can be used by all instances of a connector in the app.
+
+. Drag a connector operation onto the Studio canvas.
+. To create a global element for the connector, click the *Global Elements* tab at the base of the canvas, and then click *Create*.
+. In the *Choose Global Type* window, expand *Connector Configuration* and select *Amazon SQS Configuration*:
+. Click *OK*.
+. Specify the global element properties.
+. Leave the default entries for the *Proxy* and *Advanced* tabs.
+. Click *Test Connection* to confirm that the parameters of your global configuration are accurate and that Mule is able to connect successfully to your instance of Amazon SQS.
+. Click *OK*.
