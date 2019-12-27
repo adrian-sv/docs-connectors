@@ -11,14 +11,12 @@ Because a connector is a component in a Mule app, you should understand how to c
 Every connector has specific configuration requirements, which are described in the Reference Guide for that connector. Although connectors have different configuration requirements, most connector configurations require that you configure:
 
 * An input source to start the app flow
-* The authorization credentials needed to connect to the connector's data source, for example, to the Salesforce Marketing Cloud, Amazon S3, or SAP Concur APIs. Most connectors use Basic (username and password), OAuth, or OAuth2 authentication schemes.
+* The authorization credentials needed to connect to the connector's data source, for example, to the Salesforce Marketing Cloud, Amazon S3, or SAP Concur APIs. Most connectors use the Basic (username and password), OAuth, or OAuth2 authentication schemes.
 * A connector operation to perform the desired action
 
 === Configure an Input Source
 
-To configure an input source for a connector, select an input source associated with the connector you are configuring, or select HTTP Listener or Scheduler. Not all connectors have associated input sources.
-
-For more information about input sources, see <<introduction/introduction-to-anypoint-connectors.adoc#input-sources, Input Sources>>.
+To configure an input source for a connector, select an input source associated with the connector you are configuring, or select the HTTP Listener operation or Scheduler endpoint. Not all connectors have associated input sources, but you can use the HTTP Listener operation or Scheduler endpoint as input sources for these connectors.
 
 For more information, see:
 
@@ -45,7 +43,7 @@ Each connector has different supported operations. To see the supported operatio
 The following best practices apply to configuring connectors:
 
 * Use a global element to define configuration details that can be shared with other instances of the connector in the flow.
-* Use a properties file to store configuration variables if you are configuring a connector in Studio or by using XML.
+* Use property placeholders for property values if you are configuring a connector in Studio or by using XML.
 * Test the connectivity of a connector before you deploy it.
 * Configure a reconnection strategy to set the number of reconnection attempts to try after an initial failure.
 
@@ -69,16 +67,21 @@ image::introduction/intro-property-placeholders-studio.png[Configuring Property 
 
 Using property placeholders improves the maintainability of your applications because they enable you to change configuration values in one place. If you don't use property placeholders and configuration parameter values change, you must search for changed parameters in the connector configuration screens or configuration XML.
 
-To make the values for the placeholders available, create a `.yaml` file or `.properties` file to contain the values, and then reference the file from the connector configuration.
+To make the values for the placeholders available, create a `.yaml` file or `.properties` file to contain the values, place the file in `src/main/resources` in the Mule project, and then reference the file from the connector configuration.
 
-To reference a file for placeholder values in Studio:
+To reference a file that stores property values in Studio:
 
-. In the Global Elements screen for a connector, search for the element called *Configuration Properties* and click *OK*.
-. Click *…​* and navigate to your `.yml` or `.properties` file.
+*Reviewers: I know that users can put the placeholder file in other locations, but I want to describe one way only and I think this one is consistent with best practices.*
 
-To reference a file for placeholder values when configuring a connector using XML:
+. In the connector global element *Choose Global Type* screen, search for the element called *Configuration properties*.
+. Select *Configuration properties*.
+. Click *OK*.
+. Click *…​* to the right of the *File* field and navigate to your `.yml` or `.properties` file.
 
-Include a `<configuration-properties>` element inside `<mule`, and set its file parameter with your properties file name. For example:
+To reference a file that stores property values when configuring a connector using XML:
+
+. Include a `<configuration-properties>` element inside the `<mule` element.
+. Set the `file` parameter with your properties file name. For example:
 
 [source,xml,linenums]
 ----
@@ -86,7 +89,7 @@ Include a `<configuration-properties>` element inside `<mule`, and set its file 
   <configuration-properties
     file="myConfiguration.yaml"
     doc:name="Configuration properties"
-    doc:id="872422be-3571-4a52-a383-a2b0e16859d7" />`
+    />`
   ...
 </mule>
 ----
